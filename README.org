@@ -1,0 +1,36 @@
+* DeeDoo
+
+Command line file deduplicator.
+
+* Installation
+
+* Usage
+
+** Find duplicates in current directory TODO
+#+BEGIN_SRC bash
+deedoo
+#+END_SRC
+
+** Find duplicates in spcific directory TODO
+#+BEGIN_SRC bash
+deedoo dirname
+#+END_SRC
+
+** Find duplicates of files ending with suffix TODO
+#+BEGIN_SRC bash
+deedoo dirname --suffix image
+#+END_SRC
+
+** Find duplicates of files with prefix TODO
+#+BEGIN_SRC bash
+deedoo dirname --prefix .png
+#+END_SRC
+
+** Specify output directory
+#+BEGIN_SRC bash
+deedoo --out rejects
+#+END_SRC
+
+
+TODO: Level of comparison.
+TODO: gather timestamps details

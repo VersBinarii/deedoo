@@ -1,0 +1,10 @@
+[package]
+name = "deedoo"
+version = "0.1.0"
+authors = ["Kris <kristhesavage@gmail.com>"]
+edition = "2018"
+
+[dependencies]
+crc = "^1.8"
+walkdir = "2.2"
+clap="2.32.0"
