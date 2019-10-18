@@ -25,32 +25,32 @@ pub fn handle_file<'a, 'b>(dir_entry: &'a DirEntry, ds: &DeeDoo<'b>) {
     digest.write(&current_file_content);
     let crc = digest.sum32();
 
-    println!("The crc is: {} for file {}", crc, path.display());
+    if ds.verbose {
+        println!("The crc is: {} for file {}", crc, path.display());
+    }
+
     if ds.hm.borrow().contains_key(&crc) {
-        /* Move the file to reject directory. */
-        /* TODO: Ensure the files are exactly the same by comparing the bytes? */
-        println!(
-            "{} is duplicate. Moving it to {}",
-            path.display(),
-            ds.reject_dir.display()
-        );
+        let mut ok_to_reject = true;
+        let ds_borrow = ds.hm.borrow();
+        let previous_file_path = ds_borrow.get(&crc).unwrap();
 
         if ds.ensure {
-            let ds_borrow = ds.hm.borrow();
-            let previous_file_path = ds_borrow.get(&crc).unwrap();
-
             let previous_file_content = get_file_content(previous_file_path);
 
-            if previous_file_content == current_file_content {
-                match move_file(&path.to_owned(), &ds.reject_dir) {
-                    Ok(()) => println!("Moved!"),
-                    Err(e) => println!("Error moving file: {}", e),
-                }
+            if previous_file_content != current_file_content {
+                ok_to_reject = false;
             }
-        } else {
+        }
+
+        if ok_to_reject {
+            println!(
+                "{} is duplicate of {}. Moving it to rejects.",
+                path.display(),
+                previous_file_path.display()
+            );
             match move_file(&path.to_owned(), &ds.reject_dir) {
-                Ok(()) => println!("Moved!"),
-                Err(e) => println!("Error moving file: {}", e),
+                Ok(()) => {}
+                Err(e) => eprintln!("Error moving file: {}", e),
             }
         }
     } else {
@@ -82,8 +82,12 @@ pub fn move_file(file: &Path, dst_dir: &Path) -> Result<(), std::io::Error> {
         .recursive(true)
         .create(rejects_duplicate_dir)
     {
-        Ok(_) => println!("Created rejects dir."),
-        Err(e) => println!("{}", e),
+        Ok(_) => {}
+        Err(e) => eprintln!(
+            "Failed to create directory: [{}]. Error: {}",
+            rejects_duplicate_dir.display(),
+            e
+        ),
     }
 
     rename(duplicate, rejects_duplicate_path)

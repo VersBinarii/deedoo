@@ -14,6 +14,7 @@ pub struct DeeDoo<'a> {
     hm: RefCell<HashMap<u32, PathBuf>>,
     reject_dir: &'a Path,
     ensure: bool,
+    verbose: bool,
 }
 
 fn main() {
@@ -21,17 +22,21 @@ fn main() {
 
     let root_directory = matches.value_of("directory").unwrap_or(".");
     let root_directory = Path::new(root_directory);
-    let default_rejects_dir = matches.value_of("out_directory").unwrap_or("rejects");
+    let default_rejects_dir =
+        matches.value_of("out_directory").unwrap_or("rejects");
     let default_rejects_dir = Path::new(default_rejects_dir);
     let rejects = root_directory.join(default_rejects_dir);
 
     let ensure = matches.is_present("ensure");
+    let verbose = matches.is_present("verbose");
 
     if !rejects.exists() {
         match create_dir(&rejects) {
-            Ok(_) => println!("Rejects directory [{}] created", rejects.display()),
+            Ok(_) => {
+                println!("Rejects directory [{}] created", rejects.display())
+            }
             Err(e) => {
-                println!("Could not create directory for rejects: {}", e);
+                eprintln!("Could not create directory for rejects: {}", e);
             }
         }
     }
@@ -40,6 +45,7 @@ fn main() {
         hm: RefCell::new(HashMap::new()),
         reject_dir: &rejects,
         ensure,
+        verbose,
     };
 
     WalkDir::new(&root_directory)

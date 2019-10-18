@@ -25,10 +25,10 @@ pub fn get_args<'a>() -> ArgMatches<'a> {
                 .long("ensure"),
         )
         .arg(
-            Arg::with_name("show-only")
-                .help("Dont move, just display duplicate location.")
-                .short("s")
-                .long("show-only"),
+            Arg::with_name("verbose")
+                .help("Show extra logging")
+                .short("v")
+                .long("verbose"),
         )
         .get_matches()
 }
