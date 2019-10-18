@@ -3,34 +3,27 @@
 Command line file deduplicator.
 
 * Installation
-
+Install directly with cargo:
+#+BEGIN_SRC bash
+cargo install deedoo
+#+END_SRC
 * Usage
 
-** Find duplicates in current directory TODO
 #+BEGIN_SRC bash
-deedoo
+
+USAGE:
+    deedoo [FLAGS] [OPTIONS] <directory>
+
+FLAGS:
+    -E, --ensure       Runs additional check to verify duplicate.
+    -h, --help         Prints help information
+    -s, --show-only    Dont move, just display duplicate location.
+    -V, --version      Prints version information
+
+OPTIONS:
+    -o, --output <out_directory>    Directory for duplicated files.
+
+ARGS:
+    <directory>    Directory to scan.
 #+END_SRC
 
-** Find duplicates in spcific directory TODO
-#+BEGIN_SRC bash
-deedoo dirname
-#+END_SRC
-
-** Find duplicates of files ending with suffix TODO
-#+BEGIN_SRC bash
-deedoo dirname --suffix image
-#+END_SRC
-
-** Find duplicates of files with prefix TODO
-#+BEGIN_SRC bash
-deedoo dirname --prefix .png
-#+END_SRC
-
-** Specify output directory
-#+BEGIN_SRC bash
-deedoo --out rejects
-#+END_SRC
-
-
-TODO: Level of comparison.
-TODO: gather timestamps details
