@@ -1,6 +1,6 @@
 [package]
 name = "deedoo"
-version = "0.1.0"
+version = "0.1.2"
 authors = ["Kris <versbinarii@gmail.com>"]
 edition = "2018"
 publish = true
@@ -8,7 +8,7 @@ description = "Simple file deduplicator."
 repository = "https://github.com/VersBinarii/deedoo"
 keywords = ["file-deduplicator", "cli-tool"]
 license = "MIT"
-readme = "README.org"
+readme = "README.md"
 
 [dependencies]
 crc = "^1.8"
