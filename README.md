@@ -2,6 +2,10 @@
 
 Command line file deduplicator.
 
+## About
+
+The deduplicator does not remove any files. Any duplicates it finds are moved to the `rejects` diroctory with the full path preserved. The `rejects` directory location can be specified with the `-o` option. The program finds the duplicates by performing `crc32` calculation on the file content. If the `-E` flag is specified program will perform full byte-by-byte comparison to ensure files are the same. 
+
 ## Installation
 Install directly with cargo:
 
