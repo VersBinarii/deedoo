@@ -50,7 +50,7 @@ fn main() {
 
     WalkDir::new(&root_directory)
         .into_iter()
-        .filter_entry(|e| is_not_hidden(e))
+        .filter_entry(is_not_hidden)
         .filter_map(|v| v.ok())
         .filter(|e| !e.path().starts_with(&rejects))
         .for_each(|d| handle_file(&d, &ds));

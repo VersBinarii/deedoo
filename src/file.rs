@@ -9,11 +9,11 @@ pub fn is_not_hidden(entry: &DirEntry) -> bool {
     entry
         .file_name()
         .to_str()
-        .map(|s| entry.depth() == 0 || !s.starts_with("."))
+        .map(|s| entry.depth() == 0 || !s.starts_with('.'))
         .unwrap_or(false)
 }
 
-pub fn handle_file<'a, 'b>(dir_entry: &'a DirEntry, ds: &DeeDoo<'b>) {
+pub fn handle_file<'a>(dir_entry: &'a DirEntry, ds: &DeeDoo<'_>) {
     let path = dir_entry.path();
 
     if dir_entry.file_type().is_dir() {
@@ -48,7 +48,7 @@ pub fn handle_file<'a, 'b>(dir_entry: &'a DirEntry, ds: &DeeDoo<'b>) {
                 path.display(),
                 previous_file_path.display()
             );
-            match move_file(&path.to_owned(), &ds.reject_dir) {
+            match move_file(path, ds.reject_dir) {
                 Ok(()) => {}
                 Err(e) => eprintln!("Error moving file: {}", e),
             }
